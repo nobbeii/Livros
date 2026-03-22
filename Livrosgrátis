@@ -1,0 +1,40 @@
+# These are supported funding model platforms
+
+github: # Replace with up to 4 GitHub Sponsors-enabled usernames e.g., [user1, user2]
+patreon: # Replace with a single Patreon username
+open_collective: # Replace with a single Open Collective username
+ko_fi: # Replace with a single Ko-fi username
+tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
+liberapay: # Replace with a single Liberapay username
+issuehunt: # Replace with a single IssueHunt username
+lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
+polar: # Replace with a single Polar username
+buy_me_a_coffee: # Replace with a single Buy Me a Coffee username
+thanks_dev: # Replace with a single thanks.dev username
+custom: # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
+import requests
+
+def buscar_livro_real(titulo):
+    # API da Open Library - Gratuita e Sem Chave
+    url = f"https://openlibrary.org/search.json?q={titulo.replace(' ', '+')}"
+    
+    print(f"Buscando por: {titulo}...")
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        dados = response.json()
+        if dados['docs']:
+            livro = dados['docs'][0]
+            print(f"\n✅ Encontrado!")
+            print(f"Título: {livro.get('title')}")
+            print(f"Autor: {', '.join(livro.get('author_name', ['Desconhecido']))}")
+            print(f"Ano: {livro.get('first_publish_year')}")
+            print(f"Link: https://openlibrary.org{livro.get('key')}")
+        else:
+            print("Nada encontrado.")
+    else:
+        print("Erro na conexão.")
+
+# Exemplo de uso com um tema "poderoso"
+buscar_livro_real("The Diary of Anne Frank")
